@@ -46,7 +46,7 @@ module Rails3JQueryAutocomplete
 
           method = options[:column_name] if options.has_key?(:column_name)
 
-          term = params[:term]
+          term = filter_term(params[:term], options[:term_filter])
 
           if term && !term.blank?
             #allow specifying fully qualified class name for model object
@@ -90,6 +90,14 @@ module Rails3JQueryAutocomplete
         # TODO: Come back to remove this if clause when test suite is better
         hash
       end
+    end
+
+    #
+    # Filters the input term against a specified method.
+    #
+    # Calls filter_method on self with term and returns the result.
+    def filter_term(term, filter_method)
+      returned_term = filter_method.nil? ? term : self.send(filter_method, term)
     end
   end
 end

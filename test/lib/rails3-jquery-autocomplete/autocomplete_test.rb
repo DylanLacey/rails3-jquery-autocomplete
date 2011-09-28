@@ -55,5 +55,19 @@ module Rails3JQueryAutocomplete
         end
       end
     end
+
+    context '#filter_term' do
+      should 'return the term if :term_filter_method is blank' do
+        term = "test_term"
+        assert_equal term, filter_term(term, nil)
+      end
+
+      should 'apply the passed method to term' do
+        test_term = "test_term"
+        returned_term = "returned_term"
+        mock(self).send(:test_method, test_term) {returned_term}
+        assert_equal returned_term, filter_term(test_term, :test_method)
+      end
+    end
   end
 end

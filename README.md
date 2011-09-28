@@ -156,6 +156,19 @@ This wouldn't really make much sense unless you use it with the "id_element" att
 
 Only the object's id and the column you are searching on will be returned in JSON, so if your display_value method requires another parameter, make sure to fetch it with the :extra_data option
 
+#### :term_filter
+
+If you want to transform incoming data before it's used to search, you can use the :display_value option.
+
+This option takes a message name as a parameter, and uses that method each invocation to transform the input term.
+
+    class ProductsController < Admin::BaseController
+      def transform_like_its_1984(term)
+        "#tubular {term}
+      end
+
+      autocomplete :brand, :name, :term_filter => :transform_like_its_1984
+	end
 
 #### :scopes
   Added option to use scopes. Pass scopes in an array.
